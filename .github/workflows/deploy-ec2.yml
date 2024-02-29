@@ -22,6 +22,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
             cd /home/ubuntu/myapp # Change to your project directory
             git pull origin master # Or the branch you're deploying
-            docker-compose down # Take down the current setup
-            docker-compose up -d # Start the new setup
+            sudo docker-compose down # Take down the current setup
+            sudo docker-compose up -d # Start the new setup
           EOF
