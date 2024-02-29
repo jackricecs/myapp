@@ -23,5 +23,5 @@ jobs:
             cd /home/ubuntu/myapp # Change to your project directory
             git pull origin master # Or the branch you're deploying
             sudo docker-compose down # Take down the current setup
-            sudo docker-compose up -d # Start the new setup
+            sudo docker-compose up --build -d # Start the new setup
           EOF
