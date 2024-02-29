@@ -1,0 +1,27 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main # Set this to the branch you want to deploy from
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
+            cd /home/ubuntu/myapp # Change to your project directory
+            git pull origin master # Or the branch you're deploying
+            docker-compose down # Take down the current setup
+            docker-compose up -d # Start the new setup
+          EOF
